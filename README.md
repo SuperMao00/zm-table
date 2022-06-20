@@ -32,10 +32,10 @@
 ## 组件介绍
 #### Table Attributes
 |参数|说明|类型|必填|可选值|默认值|
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|
 |data|显示的数据|array|是|——|——|
 |height|Table 的高度，默认为自动高度。如果 height 为 number 类型，单位 rpx；如果 height 为 string 类型，则这个高度会设置为 Table 的 style.height 的值，Table 的高度会受控于外部样式。|string / number|否|——|——|
-|max-height|Table 的最大高度。|string/number|否|——|——|
+|max-height|Table 的最大高度。|string / number|否|——|——|
 |stripe|是否为斑马纹 table|boolean|否|——|false|
 |border|是否带有纵向边框|boolean|否|——|false|
 |size|Table 的尺寸|string|否|medium / small / mini|——|——|
@@ -66,7 +66,7 @@
 
 #### Table-column Attributes
 |参数|说明|类型|必填|可选值|默认值|
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|
 |type|对应列的类型。如果设置了 selection 则显示多选框；如果设置了 index 则显示该行的索引（从 1 开始计算）；如果设置了 input 则显示输入框；如果设置了 textarea 则显示多行输入框|string|否|selection / index / input / textarea|——|
 |input-type|当 type 值为 input 时，可选值参考微信小程序 input 原生支持属性|string|否|——|text|
 |label|显示的标题|string|是|——|——|
