@@ -1,0 +1,23 @@
+/* pages/examples/table/table.wxss */
+page {
+    box-sizing: border-box;
+    padding: 32rpx;
+    background: #f1f1f1;
+  }
+  
+  .configure {
+    margin-top: 60rpx;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 16rpx;
+    border-radius: 16rpx;
+  }
+  
+  .configure .input {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 320rpx;
+    padding: 8rpx 16rpx;
+    border: 2rpx solid #E4E7ED;
+    border-radius: 8rpx;
+  }

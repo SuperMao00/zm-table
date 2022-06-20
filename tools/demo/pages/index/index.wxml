@@ -1,0 +1,54 @@
+<!--pages/examples/table/table.wxml-->
+<sm-table data="{{ list }}" border="{{ border }}" stripe="{{ stripe }}" align="{{ center ? 'center' : '' }}" height="{{ height }}" show-summary="{{ showSummary }}" sum-text="{{ sumText }}" empty-text="{{ emptyText }}" size="{{ size }}" bind:selection-change="handleSelectionChange" bind:cell-switch-change="handleCellSwitchChange">
+  <sm-table-column type="selection" color="#E6A23C"></sm-table-column>
+  <sm-table-column type="{{ editable ? 'textarea' : '' }}" auto-height label="姓名" prop="name" min-width="300"></sm-table-column>
+  <sm-table-column type="{{ editable ? 'input' : '' }}" input-type="number" label="年龄" prop="age"></sm-table-column>
+  <sm-table-column label="性别" prop="sex" wx:if="{{ !hideSex }}"></sm-table-column>
+</sm-table>
+
+<!-- <view class="configure">
+  <sm-cell title="渲染数据" center>
+    <switch checked="{{ renderData }}" bindchange="handleSwitchChange" data-prop="renderData"></switch>
+  </sm-cell>
+  <sm-cell title="边框" center>
+    <switch checked="{{ border }}" bindchange="handleSwitchChange" data-prop="border"></switch>
+  </sm-cell>
+  <sm-cell title="斑马纹" center>
+    <switch checked="{{ stripe }}" bindchange="handleSwitchChange" data-prop="stripe"></switch>
+  </sm-cell>
+  <sm-cell title="文本居中" center>
+    <switch checked="{{ center }}" bindchange="handleSwitchChange" data-prop="center"></switch>
+  </sm-cell>
+  <sm-cell title="隐藏性别" center>
+    <switch checked="{{ hideSex }}" bindchange="handleSwitchChange" data-prop="hideSex"></switch>
+  </sm-cell>
+  <sm-cell title="Table尺寸" center>
+    <view style="display: flex;justify-content: flex-end;font-size: 28rpx;">
+      <text bindtap="handleChangeTabelSize" data-size="" style="margin: 0 12rpx;{{ size === '' ? '' : 'color: #909399;' }}">normal</text> /
+      <text bindtap="handleChangeTabelSize" data-size="medium" style="margin: 0 12rpx;{{ size === 'medium' ? '' : 'color: #909399;' }}">medium</text> /
+      <text bindtap="handleChangeTabelSize" data-size="small" style="margin: 0 12rpx;{{ size === 'small' ? '' : 'color: #909399;' }}">small</text> /
+      <text bindtap="handleChangeTabelSize" data-size="mini" style="margin: 0 12rpx;{{ size === 'mini' ? '' : 'color: #909399;' }}">mini</text>
+    </view>
+  </sm-cell>
+  <sm-cell title="指定高度" center label="默认单位：rpx">
+    <view class="input">
+      <input value="{{ height }}" bindblur="handleSetHeight" />
+    </view>
+  </sm-cell>
+  <sm-cell title="表尾显示合计行" center>
+    <switch checked="{{ showSummary }}" bindchange="handleSwitchChange" data-prop="showSummary"></switch>
+  </sm-cell>
+  <sm-cell title="合计行第一列的文本" center>
+    <view class="input">
+      <input value="{{ sumText }}" bindblur="handleSetSumText" />
+    </view>
+  </sm-cell>
+  <sm-cell title="空数据时显示的文本内容" center>
+    <view class="input">
+      <input value="{{ emptyText }}" bindblur="handleSetEmptyText" />
+    </view>
+  </sm-cell>
+  <sm-cell title="可编辑" center>
+    <switch checked="{{ editable }}" bindchange="handleSwitchChange" data-prop="editable"></switch>
+  </sm-cell>
+</view> -->

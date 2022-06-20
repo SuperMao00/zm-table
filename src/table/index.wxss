@@ -1,0 +1,177 @@
+.sm-table {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin: 8rpx 0;
+  background: #fff;
+  font-size: 32rpx;
+  overflow: hidden;
+  overflow-x: auto;
+  position: relative;
+}
+
+.sm-table .sm-table-main {
+  overflow-x: auto;
+}
+
+.sm-table--border {
+  border: 2rpx solid #EBEEF5;
+  border-bottom: none;
+}
+
+.sm-table--medium {
+  font-size: 28rpx;
+}
+
+.sm-table--small {
+  font-size: 24rpx;
+}
+
+.sm-table--mini {
+  font-size: 20rpx;
+}
+
+.sm-table::before,
+.sm-table--border::after {
+  content: '';
+  background-color: #EBEEF5;
+  position: absolute;
+  z-index: 1;
+}
+
+.sm-table::before {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.sm-table--border .sm-table__cell {
+  border-right: 2rpx solid #EBEEF5;
+}
+
+.sm-table--border .sm-table__cell:last-child {
+  border-right: none;
+}
+
+.sm-table--scrollable-y .sm-table__body-wrapper {
+  overflow-y: auto;
+}
+
+.sm-table .hidden-columns {
+  visibility: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.sm-table__header-wrapper,
+.sm-table__body-wrapper,
+.sm-table__footer-wrapper {
+  width: 100%;
+}
+
+.sm-table__header-wrapper {
+  font-weight: bold;
+}
+
+.sm-table__footer-wrapper .sm-table__cell {
+  border-top: 2rpx solid #EBEEF5;
+}
+
+.sm-table__append-wrapper {
+  overflow: hidden;
+}
+
+.sm-table .sm-table__row {
+  display: flex;
+}
+
+.sm-table .sm-table__cell {
+  flex: 1;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #EBEEF5;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.sm-table .sm-table__cell.is-center {
+  text-align: center;
+}
+
+.sm-table .sm-table__cell.is-right {
+  text-align: right;
+}
+
+.sm-table .sm-table__row--striped .sm-table__cell {
+  background: #fafafa;
+}
+
+.sm-table .sm-table__row--click .sm-table__cell {
+  background: #F5F7FA;
+}
+
+.sm-table .cell {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 20rpx;
+  word-break: break-all;
+}
+
+/* 扩展 cell */
+.sm-table .cell-input-wrapper,
+.sm-table .cell-textarea-wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6rpx 12rpx;
+  border: 2rpx solid #EBEEF5;
+  border-radius: 4rpx;
+}
+
+.sm-table .cell-input-wrapper .cell-input,
+.sm-table .cell-textarea-wrapper .cell-textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* .sm-table .cell-switch-wrapper .cell-switch {
+  white-space: nowrap;
+}
+
+.sm-table .cell-switch-wrapper .cell-switch.is-disabled {
+  opacity: 0.55;
+} */
+
+.sm-table .cell-button-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.sm-table .cell-button-wrapper .cell-button {
+  white-space: nowrap;
+  margin: 4rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+}
+
+/* 空状态 */
+.sm-table .sm-table__empty-block {
+  min-height: 120rpx;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sm-table__empty-block:empty,
+.sm-table__empty-block:not(:empty)+.sm-table__empty-block {
+  display: none;
+}
+
+.sm-table__empty-block .el-table__empty-text {
+  line-height: 120rpx;
+  width: 50%;
+  color: #909399;
+}

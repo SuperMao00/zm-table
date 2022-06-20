@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "sm-table": "../../components/table/index",
+    "sm-table-column": "../../components/table-column/index"
+  }
+}
