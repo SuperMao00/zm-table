@@ -6,7 +6,7 @@
   <view class="sm-table__header-wrapper" wx:if="{{ showHeader }}">
     <view class="sm-table__header">
       <view class="sm-table__row">
-        <view class="sm-table__cell {{ column.align ? 'is-' + column.align : align ? 'is-' + align : '' }} cell-class" style="{{ column.width ? 'flex: 0 0 ' + utils.formatSize(column.width) + ';' : '' }} {{ column.minWidth ? 'min-width: ' + utils.formatSize(column.minWidth) + ';' : '' }}" wx:for="{{ columns }}" wx:key="index" wx:for-item="column" bindtap="handleHeaderClick" data-column="{{ column }}" data-index="{{ index }}">
+        <view class="sm-table__cell {{ column.align ? 'is-' + column.align : align ? 'is-' + align : '' }} cell-class" style="{{ column.width ? 'flex: 0 0 ' + utils.formatSize(column.width) + ';' : '' }} {{ column.minWidth ? 'min-width: ' + utils.formatSize(column.minWidth) + ';' : '' }}" wx:for="{{ columns }}" wx:key="index" wx:for-item="column" bindtap="handleHeaderClick" data-column="{{ column }}">
           <view class="cell">
             <view class="cell-selection-wrapper" wx:if="{{ column.type === 'selection' }}">
               <view class="cell-selection">
@@ -24,24 +24,18 @@
     <view class="sm-table__body" wx:if="{{ data.length }}">
       <checkbox-group bindchange="handleSelectionChange">
         <view class="sm-table__row {{ stripe && index % 2 !== 0 ? 'sm-table__row--striped' : '' }}" hover-class="{{ rowHover ? 'sm-table__row--click' : '' }}" wx:for="{{ data }}" wx:key="index">
-          <view class="sm-table__cell {{ column.align ? 'is-' + column.align : align ? 'is-' + align : '' }} cell-class" style="{{ column.width ? 'flex: 0 0 ' + utils.formatSize(column.width) + ';' : '' }}{{ column.minWidth ? 'min-width: ' + utils.formatSize(column.minWidth) + ';' : '' }} {{ column.customStyle }}" wx:for="{{ columns }}" wx:for-item="column" wx:for-index="cellIndex" wx:key="cellIndex" bindlongpress="handleLongPress" bindtap="handleClick" data-row="{{ item }}" data-index="{{ index }}" data-cell-index="{{ cellIndex }}">
+          <view class="sm-table__cell {{ column.align ? 'is-' + column.align : align ? 'is-' + align : '' }} cell-class" style="{{ column.width ? 'flex: 0 0 ' + utils.formatSize(column.width) + ';' : '' }}{{ column.minWidth ? 'min-width: ' + utils.formatSize(column.minWidth) + ';' : '' }} {{ column.customStyle }}" wx:for="{{ columns }}" wx:for-item="column" wx:for-index="cellIndex" wx:key="cellIndex" bindlongpress="handleLongPress" bindtap="handleClick" data-row="{{ item }}" data-row-index="{{ index }}" data-cell="{{ item[column.prop] }}" data-cell-index="{{ cellIndex }}" data-column="{{ column }}">
             <view class="cell">
               <!-- 索引 -->
               <view wx:if="{{ column.type === 'index' }}">{{ index + 1 }}</view>
-              <!-- input 输入 -->
+              <!-- input -->
               <view class="cell-input-wrapper" catchtap="handleStopBubbling" wx:elif="{{ column.type === 'input' }}">
-                <input class="cell-input" type="{{ column.inputType }}" value="{{ item[column.prop] }}" disabled="{{ column.disabled }}" bindfocus="handleInputFocus" bindblur="handleInputBlur" bindinput="debouncedHandleInputChange" bindconfirm="handleInputConfirm" data-row="{{ item }}" data-index="{{ index }}" data-cell-index="{{ cellIndex }}" />
+                <input class="cell-input" type="{{ column.inputType }}" value="{{ item[column.prop] }}" disabled="{{ column.disabled }}" bindfocus="handleInputFocus" bindblur="handleInputBlur" bindinput="debouncedHandleInputChange" bindconfirm="handleInputConfirm" data-row="{{ item }}" data-row-index="{{ index }}" data-cell="{{ item[column.prop] }}" data-cell-index="{{ cellIndex }}" data-column="{{ column }}" />
               </view>
-              <!-- textarea 输入 -->
+              <!-- textarea -->
               <view class="cell-textarea-wrapper" catchtap="handleStopBubbling" wx:elif="{{ column.type === 'textarea' }}">
-                <textarea class="cell-textarea" value="{{ item[column.prop] }}" disabled="{{ column.disabled }}" auto-height="{{ column.autoHeight }}" bindfocus="handleInputFocus" bindblur="handleInputBlur" bindinput="debouncedHandleInputChange" bindconfirm="handleInputConfirm" data-row="{{ item }}" data-index="{{ index }}" data-cell-index="{{ cellIndex }}" />
+                <textarea class="cell-textarea" value="{{ item[column.prop] }}" disabled="{{ column.disabled }}" auto-height="{{ column.autoHeight }}" bindfocus="handleInputFocus" bindblur="handleInputBlur" bindinput="debouncedHandleInputChange" bindconfirm="handleInputConfirm" data-row="{{ item }}" data-row-index="{{ index }}" data-cell="{{ item[column.prop] }}" data-cell-index="{{ cellIndex }}" data-column="{{ column }}" />
               </view>
-              <!-- 开关 -->
-              <!-- <view class="cell-switch-wrapper" wx:elif="{{ column.type === 'switch' }}">
-                <view class="cell-switch {{ item.disabled || column.disabled ? 'is-disabled' : '' }}">
-                  <switch checked="{{ item[column.prop] === column.activeValue }}" disabled="{{ item.disabled || column.disabled }}" color="{{ item[column.prop] === column.activeValue ?  column.activeColor : column.inactiveColor }}" bindchange="handleSwitchChange" data-row="{{ item }}" data-index="{{ index }}" data-cell-index="{{ cellIndex }}" data-column="{{ column }}" />
-                </view>
-              </view> -->
               <!-- selection -->
               <view class="cell-selection-wrapper" catchtap="handleStopBubbling" wx:elif="{{ column.type === 'selection' }}">
                 <view class="cell-selection">
@@ -49,13 +43,11 @@
                 </view>
               </view>
               <!-- 按钮 -->
-              <view class="cell-button-wrapper" catchtap="handleButtonClick" data-row="{{ item }}" data-index="{{ index }}" data-cell-index="{{ cellIndex }}" wx:elif="{{ column.type === 'button' }}">
+              <view class="cell-button-wrapper" wx:elif="{{ column.type === 'button' }}">
                 <block wx:if="{{ column.button && column.button.length > 0 }}">
-                  <button class="cell-button" type="{{ btn.type }}" open-type="{{ btn.openType }}" data-open-type="{{ btn.openType ? true : false }}" size="{{ btn.size || 'mini' }}" plain="{{ btn.plain }}" wx:for="{{ column.button }}" wx:key="index" wx:for-item="btn" data-index="{{ index }}">{{ btn.text }}</button>
-                </block>
-                <block wx:else>
-                  <button class="cell-button" type="primary" size="mini" data-type="confirm">{{ column.confirmText }}</button>
-                  <button class="cell-button" size="mini" data-type="cancel">{{ column.cancelText }}</button>
+                  <button class="cell-button" type="{{ btn.type }}" open-type="{{ btn.openType }}" data-open-type="{{ btn.openType ? true : false }}" size="{{ btn.size }}" plain="{{ btn.plain }}" wx:for="{{ column.button }}" wx:for-item="btn" wx:for-index="bIndex" wx:key="index" wx:for-item="btn" catchtap="handleButtonClick" data-index="{{ bIndex }}" data-row="{{ item }}" data-row-index="{{ index }}" data-column="{{ column }}" data-type="{{ btn.type }}" data-trigger-event="{{ btn.triggerEvent }}">
+                    <text>{{ btn.text }}</text>
+                  </button>
                 </block>
               </view>
               <!-- 文本 -->

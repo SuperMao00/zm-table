@@ -51,12 +51,19 @@
 |dataset|事件源组件上由data-开头的自定义属性组成的集合|object|否|——|——|
 
 #### Table Events
-|事件名|说明|参数|
+|事件名|说明|参数(event.detail)|
 |---|---|---|
 |header-click|当某一列的表头被点击时会触发该事件|column, event|
-|row-|当某一列的表头被点击时会触发该事件|column, event|
-|cell-|当某一列的表头被点击时会触发该事件|column, event|
+|row-click|当某一行被点击时会触发该事件|row, rowIndex, cell, cellIndex, column, event|
+|cell-click|当某个单元格被点击时会触发该事件|row, rowIndex, cell, cellIndex, column, event|
+|row-long-press|当某一行被长按时会触发该事件|row, rowIndex, cell, cellIndex, column, event|
+|cell-long-press|当某个单元格被长按时会触发该事件|row, rowIndex, cell, cellIndex, column, event|
+|cell-input|当某个单元格键盘输入时会触发该事件|row, rowIndex, cell, cellIndex, column, event|
+|cell-input-focus|当某个单元格输入框聚焦时触发|row, rowIndex, cell, cellIndex, column, value, event|
+|cell-input-blur|当某个单元格输入框失去焦点时触发|row, rowIndex, cell, cellIndex, column, value, event|
+|cell-input-confirm|当某个单元格点击完成按钮时触发|row, rowIndex, cell, cellIndex, column, value, event|
 |selection-change|当选择项发生变化时会触发该事件|selection|
+|click|当某个单元格按钮被点击时触发|row, rowIndex, cell, cellIndex, column, event|
 
 #### Table Slot
 |name|说明|
@@ -67,7 +74,7 @@
 #### Table-column Attributes
 |参数|说明|类型|必填|可选值|默认值|
 |---|---|---|---|---|---|
-|type|对应列的类型。如果设置了 selection 则显示多选框；如果设置了 index 则显示该行的索引（从 1 开始计算）；如果设置了 input 则显示输入框；如果设置了 textarea 则显示多行输入框|string|否|selection / index / input / textarea|——|
+|type|对应列的类型。如果设置了 selection 则显示多选框；如果设置了 index 则显示该行的索引（从 1 开始计算）；如果设置了 input 则显示输入框；如果设置了 textarea 则显示多行输入框|string|否|selection / index / input / textarea / button|——|
 |input-type|当 type 值为 input 时，可选值参考微信小程序 input 原生支持属性|string|否|——|text|
 |label|显示的标题|string|是|——|——|
 |prop|对应列内容的字段名|string|是|——|——|
@@ -78,3 +85,4 @@
 |color|当 type 值为 selection 时，checkbox的颜色，同 css 的color|string|否|——|#09BB07|
 |align|对齐方式，优先级高于 table 的 align 属性|string|否|center / right|——|——|
 |custom-style|自定义样式|string|否|——|——|
+|button|需要渲染的按钮，按钮对象组成数组，按钮对象属性可选值参考微信小程序 button 原生支持属性，设置 triggerEvent 属性组件内部会触发对应名字的事件|array|否|——|——|

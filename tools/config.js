@@ -93,5 +93,5 @@ module.exports = {
     }
   },
 
-  copy: ['./assets', './utils.js', './table/util.wxs', './table/throttle-debounce.js'], // 将会复制到目标目录
+  copy: ['./table/util.wxs', './table/throttle-debounce.js'], // 将会复制到目标目录
 }

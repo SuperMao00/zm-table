@@ -17,15 +17,15 @@ function throttle(delay, noTrailing, callback, debounceMode) {
   // The `wrapper` function encapsulates all of the throttling / debouncing
   // functionality and when executed will limit the rate at which `callback`
   // is executed.
-  function wrapper(...argss) {
+  function wrapper(...args) {
     const self = this
     const elapsed = Number(new Date()) - lastExec
-    const args = argss
+    const params = args
 
     // Execute `callback` and update the `lastExec` timestamp.
     function exec() {
       lastExec = Number(new Date())
-      callback.apply(self, args)
+      callback.apply(self, params)
     }
 
     // If `debounceMode` is true (at begin) this is used to clear the flag

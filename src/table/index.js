@@ -64,7 +64,10 @@ Component({
       type: Number,
       value: 300
     },
-    dataset: Object,
+    dataset: {
+      type: Object,
+      value: {}
+    },
   },
 
   /**
@@ -82,11 +85,10 @@ Component({
 
   observers: {
     data(data) {
-      const result = []
       if (!data || data.length === 0) {
         return this.setData({
           optional: [],
-          multipleSelection: result,
+          multipleSelection: [],
         })
       }
       return this.setData({
@@ -226,63 +228,70 @@ Component({
 
     handleHeaderClick(event) {
       const {
-        column,
-        index
+        column
       } = event.currentTarget.dataset
       this.triggerEvent('header-click', {
         column,
-        index,
         event,
       })
     },
 
+    // row、cell 点击
     handleClick(event) {
       if (this.data._focus) return // input 事件期间不执行 click 事件
       const {
         row,
-        index,
+        rowIndex,
+        cell,
         cellIndex,
+        column,
       } = event.currentTarget.dataset
-      const column = this.data.columns[cellIndex]
-      this.handleEvent(event, row, index, cellIndex, column, '', 'click')
+      this.handleEvent(event, row, rowIndex, cell, cellIndex, column, '', 'click')
     },
 
+    // row、cell 长按
     handleLongPress(event) {
       const {
         row,
-        index,
+        rowIndex,
+        cell,
         cellIndex,
+        column,
       } = event.currentTarget.dataset
-      const column = this.data.columns[cellIndex]
-      this.handleEvent(event, row, index, cellIndex, column, '', 'long-press')
+      this.handleEvent(event, row, rowIndex, cell, cellIndex, column, '', 'long-press')
     },
 
+    // 键盘输入时触发
     handleInputChange(event) {
       const {
         value
       } = event.detail
       const {
         row,
-        index,
+        rowIndex,
+        cell,
         cellIndex,
       } = event.currentTarget.dataset
       const column = this.data.columns[cellIndex]
-      this.handleEvent(event, row, index, cellIndex, column, value, 'input-change')
+      this.handleEvent(event, row, rowIndex, cell, cellIndex, column, value, 'input')
     },
 
+    // 点击完成按钮时触发
     handleInputConfirm(event) {
       const {
         value
       } = event.detail
       const {
         row,
-        index,
+        rowIndex,
+        cell,
         cellIndex,
       } = event.currentTarget.dataset
       const column = this.data.columns[cellIndex]
-      this.handleEvent(event, row, index, cellIndex, column, value, 'input-confirm')
+      this.handleEvent(event, row, rowIndex, cell, cellIndex, column, value, 'input-confirm')
     },
 
+    // 输入框聚焦时触发
     handleInputFocus(event) {
       clearTimeout(this.data._focusTimer) // blur 后再 focus 必须清除该定时器操作
       this.data._focus = true
@@ -291,24 +300,27 @@ Component({
       } = event.detail
       const {
         row,
-        index,
+        rowIndex,
+        cell,
         cellIndex,
+        column,
       } = event.currentTarget.dataset
-      const column = this.data.columns[cellIndex]
-      this.handleEvent(event, row, index, cellIndex, column, value, 'input-focus')
+      this.handleEvent(event, row, rowIndex, cell, cellIndex, column, value, 'input-focus')
     },
 
+    // 输入框失去焦点时触发
     handleInputBlur(event) {
       const {
         value
       } = event.detail
       const {
         row,
-        index,
+        rowIndex,
+        cell,
         cellIndex,
+        column,
       } = event.currentTarget.dataset
-      const column = this.data.columns[cellIndex]
-      this.handleEvent(event, row, index, cellIndex, column, value, 'input-blur')
+      this.handleEvent(event, row, rowIndex, cell, cellIndex, column, value, 'input-blur')
       clearTimeout(this.data._focusTimer)
       this.data._focusTimer = setTimeout(() => {
         this.setData({
@@ -317,36 +329,22 @@ Component({
       }, 300)
     },
 
-    handleEvent(event, row, index, cellIndex, column, value, name) {
-      let detail = {
+    // row、cell 事件代理
+    handleEvent(event, row, rowIndex, cell, cellIndex, column, value, type) {
+      if (column && column.__wxExparserNodeId__) delete column.__wxExparserNodeId__
+      const detail = {
         event,
         row,
-        index,
+        rowIndex,
+        cell,
         cellIndex,
         column,
         value,
       }
-      const dataset = this.data.dataset
-      if (dataset && Object.keys(dataset).length > 0) {
-        detail = {
-          ...detail,
-          ...dataset
-        }
-      }
-      this.triggerEvent(`cell-${name}`, detail)
-      this.triggerEvent(`row-${name}`, detail)
-    },
-
-    // switch 开关
-    handleSwitchChange(event) {
-      const value = event.detail.value
-      const {
-        row,
-        index,
-        cellIndex,
-        column
-      } = event.currentTarget.dataset
-      this.handleEvent(event, row, index, cellIndex, column, value, 'switch-change')
+      detail.dataset = this.data.dataset
+      if (type === 'click' || type === 'long-press') delete detail.value
+      this.triggerEvent(`cell-${type}`, detail)
+      this.triggerEvent(`row-${type}`, detail)
     },
 
     // 多选
@@ -382,29 +380,27 @@ Component({
     // 按钮
     handleButtonClick(event) {
       const {
-        type,
-        openType,
-        index: btnIndex,
-      } = event.target.dataset
-      if (openType) return
-      const {
-        row,
         index,
-        cellIndex
+        openType,
+        row,
+        rowIndex,
+        column,
+        triggerEvent,
       } = event.currentTarget.dataset
       const detail = {
-        row,
         index,
-        cellIndex,
-        event,
+        row,
+        rowIndex,
+        column,
       }
-      if (type) {
-        this.triggerEvent(type, detail)
+      if (openType) return
+      if (column && column.__wxExparserNodeId__) delete column.__wxExparserNodeId__
+      detail.dataset = this.data.dataset
+      if (triggerEvent) {
+        this.triggerEvent(triggerEvent, detail)
         return
       }
-      detail.index = btnIndex
-      detail.rowIndex = index
-      this.triggerEvent('custom-button', detail)
+      this.triggerEvent('click', detail)
     },
   }
 })
