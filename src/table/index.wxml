@@ -1,4 +1,6 @@
-<view class="sm-table {{ border ? 'sm-table--border' : '' }} {{ scrollableY ? 'sm-table--scrollable-y' : '' }} custom-class {{ size ? 'sm-table--' + size + ';' : '' }}" style="{{ customStyle }}">
+<wxs module="computed" src="./index.wxs" />
+
+<view class="{{ computed.rootClass({ border, size, scrollableY }) }}" style="{{ customStyle }}">
   <view class="hidden-columns">
     <slot></slot>
   </view>
@@ -6,7 +8,7 @@
   <view class="sm-table__header-wrapper" wx:if="{{ showHeader }}">
     <view class="sm-table__header">
       <view class="sm-table__row">
-        <view class="sm-table__cell {{ column.align ? 'is-' + column.align : align ? 'is-' + align : '' }} cell-class" style="{{ column.width ? 'flex: 0 0 ' + utils.formatSize(column.width) + ';' : '' }} {{ column.minWidth ? 'min-width: ' + utils.formatSize(column.minWidth) + ';' : '' }}" wx:for="{{ columns }}" wx:key="index" wx:for-item="column" bindtap="handleHeaderClick" data-column="{{ column }}">
+        <view class="{{ computed.cellClass({ columnAlign: column.align, align }) }}" style="{{ computed.cellStyle({ flex: column.flex, width: column.width, minWidth: column.minWidth }) }}" wx:for="{{ columns }}" wx:key="index" wx:for-item="column" bindtap="handleHeaderClick" data-column="{{ column }}">
           <view class="cell">
             <view class="cell-selection-wrapper" wx:if="{{ column.type === 'selection' }}">
               <view class="cell-selection">
@@ -20,11 +22,11 @@
     </view>
   </view>
 
-  <view class="sm-table__body-wrapper" style="{{ scrollableY && height ? 'height: ' + utils.formatSize(height) + ';' : '' }} {{ scrollableY && maxHeight ? 'max-height: ' + utils.formatSize(maxHeight) + ';' : '' }}">
+  <view class="sm-table__body-wrapper" style="{{ computed.bodyStyle({ scrollableY, height, maxHeight }) }}">
     <view class="sm-table__body" wx:if="{{ data.length }}">
       <checkbox-group bindchange="handleSelectionChange">
         <view class="sm-table__row {{ stripe && index % 2 !== 0 ? 'sm-table__row--striped' : '' }}" hover-class="{{ rowHover ? 'sm-table__row--click' : '' }}" wx:for="{{ data }}" wx:key="index">
-          <view class="sm-table__cell {{ column.align ? 'is-' + column.align : align ? 'is-' + align : '' }} cell-class" style="{{ column.width ? 'flex: 0 0 ' + utils.formatSize(column.width) + ';' : '' }}{{ column.minWidth ? 'min-width: ' + utils.formatSize(column.minWidth) + ';' : '' }} {{ column.customStyle }}" wx:for="{{ columns }}" wx:for-item="column" wx:for-index="cellIndex" wx:key="cellIndex" bindlongpress="handleLongPress" bindtap="handleClick" data-row="{{ item }}" data-row-index="{{ index }}" data-cell="{{ item[column.prop] }}" data-cell-index="{{ cellIndex }}" data-column="{{ column }}">
+          <view class="{{ computed.cellClass({ columnAlign: column.align, align }) }}" style="{{ computed.cellStyle({ flex: column.flex, width: column.width, minWidth: column.minWidth, customStyle: column.customStyle }) }}" wx:for="{{ columns }}" wx:for-item="column" wx:for-index="cellIndex" wx:key="cellIndex" bindlongpress="handleLongPress" bindtap="handleClick" data-row="{{ item }}" data-row-index="{{ index }}" data-cell="{{ item[column.prop] }}" data-cell-index="{{ cellIndex }}" data-column="{{ column }}">
             <view class="cell">
               <!-- 索引 -->
               <view wx:if="{{ column.type === 'index' }}">{{ index + 1 }}</view>
@@ -73,7 +75,7 @@
   <view class="sm-table__footer-wrapper" hidden="{{ !data || !data.length }}" wx:if="{{ showSummary }}">
     <view class="sm-table__footer">
       <view class="sm-table__row">
-        <view class="sm-table__cell {{ column.align ? 'is-' + column.align : align ? 'is-' + align : '' }} cell-class" style="{{ column.width ? 'flex: 0 0 ' + utils.formatSize(column.width) + ';' : '' }}{{ column.minWidth ? 'min-width: ' + utils.formatSize(column.minWidth) + ';' : '' }}" wx:for="{{ columns }}" wx:key="index" wx:for-item="column">
+        <view class="{{ computed.cellClass({ columnAlign: column.align, align }) }}" style="{{ computed.cellStyle({ flex: column.flex, width: column.width, minWidth: column.minWidth }) }}" wx:for="{{ columns }}" wx:key="index" wx:for-item="column">
           <view class="cell">
             {{ sums[index] }}
           </view>
@@ -82,5 +84,3 @@
     </view>
   </view>
 </view>
-
-<wxs module="utils" src="./util.wxs" />

@@ -1,6 +1,6 @@
 {
   "name": "zm-table",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "miniprogram simple table",
   "main": "miniprogram_dist/index.js",
   "scripts": {

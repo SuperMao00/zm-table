@@ -21,6 +21,7 @@ Component({
     type: String,
     label: String,
     prop: String,
+    flex: Number,
     width: String,
     minWidth: String,
     disabled: Boolean,

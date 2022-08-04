@@ -1,0 +1,52 @@
+var style = require('./style.wxs');
+
+function rootClass(data) {
+  var classes = ['sm-table'];
+  if (data.border) classes.push('sm-table--border');
+  if (data.size) classes.push('sm-table--' + data.size);
+  if (data.scrollableY) classes.push('sm-table--scrollable-y');
+  classes.push('custom-class');
+  return classes.join(' ');
+}
+
+function cellClass(data) {
+  var classes = ['sm-table__cell'];
+  if (data.columnAlign) {
+    classes.push('is-' + data.columnAlign);
+  } else if (data.align) {
+    classes.push('is-' + data.align);
+  }
+  classes.push('cell-class');
+  return classes.join(' ');
+}
+
+function bodyStyle(data) {
+  return style([
+    data.scrollableY && data.height ? 'height: ' + formatSize(data.height) + ';' : '',
+    data.scrollableY && data.maxHeight ? 'max-height: ' + formatSize(data.maxHeight) + ';' : '',
+  ]);
+}
+
+function cellStyle(data) {
+  return style([
+    data.flex ? 'flex: ' + data.flex + ';' : '',
+    data.width ? 'flex: 0 0 ' + formatSize(data.width) + ';' : '',
+    data.minWidth ? 'flex: 0 0 ' + formatSize(data.minWidth) + ';' : '',
+    data.customStyle,
+  ]);
+}
+
+function formatSize(value) {
+  if (!value) return value;
+  if (typeof value === 'number') return value + 'rpx';
+  if (!value.trim()) return value;
+  var regExp = getRegExp("(px|rpx|%|rem|em)$");
+  return value.search(regExp) === -1 ? value + 'rpx' : value;
+}
+
+module.exports = {
+  rootClass: rootClass,
+  cellClass: cellClass,
+  bodyStyle: bodyStyle,
+  cellStyle: cellStyle,
+};
