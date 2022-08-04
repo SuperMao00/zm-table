@@ -80,6 +80,7 @@
 |prop|对应列内容的字段名|string|是|——|——|
 |width|对应列的宽度|string|否|——|——|
 |min-width|对应列的最小宽度，与 width 的区别是 width 是固定的，min-width 会把剩余宽度自动分配|string|否|——|——|
+|flex|对应列的空间占比|number|否|——|——|
 |disabled|当 type 值为 selection / input / textarea 时，是否禁用 |boolean|否|——|false|
 |auto-height|当 type 值为 textarea 时，是否自动增高|boolean|否|——|false|
 |color|当 type 值为 selection 时，checkbox的颜色，同 css 的color|string|否|——|#09BB07|
