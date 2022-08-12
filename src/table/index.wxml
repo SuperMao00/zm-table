@@ -32,7 +32,7 @@
               <view wx:if="{{ column.type === 'index' }}">{{ index + 1 }}</view>
               <!-- input -->
               <view class="cell-input-wrapper" catchtap="handleStopBubbling" wx:elif="{{ column.type === 'input' }}">
-                <input class="cell-input" type="{{ column.inputType }}" value="{{ item[column.prop] }}" disabled="{{ column.disabled }}" bindfocus="handleInputFocus" bindblur="handleInputBlur" bindinput="debouncedHandleInputChange" bindconfirm="handleInputConfirm" data-row="{{ item }}" data-row-index="{{ index }}" data-cell="{{ item[column.prop] }}" data-cell-index="{{ cellIndex }}" data-column="{{ column }}" />
+                <input class="cell-input" type="{{ column.inputType }}" maxlength="{{ column.maxlength }}" value="{{ item[column.prop] }}" disabled="{{ column.disabled }}" bindfocus="handleInputFocus" bindblur="handleInputBlur" bindinput="debouncedHandleInputChange" bindconfirm="handleInputConfirm" data-row="{{ item }}" data-row-index="{{ index }}" data-cell="{{ item[column.prop] }}" data-cell-index="{{ cellIndex }}" data-column="{{ column }}" />
               </view>
               <!-- textarea -->
               <view class="cell-textarea-wrapper" catchtap="handleStopBubbling" wx:elif="{{ column.type === 'textarea' }}">

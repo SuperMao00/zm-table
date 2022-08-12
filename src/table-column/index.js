@@ -30,6 +30,10 @@ Component({
       type: String,
       value: 'text'
     },
+    maxlength: {
+      type: Number,
+      value: -1
+    },
     align: String,
     color: String,
     button: Array,
