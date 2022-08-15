@@ -53,7 +53,7 @@
                 </block>
               </view>
               <!-- 文本 -->
-              <view wx:else>{{ item[column.prop] }}</view>
+              <view wx:else>{{ column.formatter.fn ? column.formatter.fn() : item[column.prop] }}</view>
             </view>
           </view>
         </view>
@@ -76,7 +76,7 @@
     <view class="sm-table__footer">
       <view class="sm-table__row">
         <view class="{{ computed.cellClass({ columnAlign: column.align, align }) }}" style="{{ computed.cellStyle({ flex: column.flex, width: column.width, minWidth: column.minWidth }) }}" wx:for="{{ columns }}" wx:key="index" wx:for-item="column">
-          <view class="cell">
+          <view class="cell" wx:if="{{ column.showSummary }}">
             {{ sums[index] }}
           </view>
         </view>

@@ -38,6 +38,10 @@ Component({
     color: String,
     button: Array,
     customStyle: String,
+    showSummary: {
+      type: Boolean,
+      value: true
+    },
   },
 
   /**
